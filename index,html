@@ -1,52 +1,80 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Temperaturdiagramm</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Umweltdaten – Live</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 1em;
-      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #f4f7fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 1em;
+    header {
+      background-color: #007acc;
+      color: white;
+      width: 100%;
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+    .container {
+      max-width: 800px;
+      width: 95%;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     iframe {
-      border: none;
       width: 100%;
-      max-width: 500px;
-      height: 300px;
+      height: 320px;
+      border: none;
+      border-radius: 8px;
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .links a {
+      text-decoration: none;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .links a:hover {
+      background-color: #005f99;
     }
   </style>
 </head>
 <body>
-  <h1>Umgebungstemperatur</h1>
-  <div>
-    <button onclick="switchView('24h')">24h Ansicht</button>
-    <button onclick="switchView('week')">Wochenansicht</button>
+  <header>
+    Live-Umweltdaten von M5StickC Plus
+  </header>
+  <div class="container">
+    <h2>Letzte 24 Stunden – Temperatur</h2>
+    <iframe src="https://thingspeak.com/channels/2906937/charts/1?bgcolor=%23ffffff&color=%23007acc&dynamic=true&results=1440&type=line"></iframe>
+
+    <h2 style="margin-top: 30px;">Letzte 24 Stunden – Luftfeuchtigkeit</h2>
+    <iframe src="https://thingspeak.com/channels/2906937/charts/2?bgcolor=%23ffffff&color=%23007acc&dynamic=true&results=1440&type=line"></iframe>
+
+    <div class="links">
+      <a href="https://thingspeak.com/channels/2906937">Channel öffnen</a>
+      <a href="https://thingspeak.com/channels/2906937/charts/1?days=7&type=line">Wochenansicht</a>
+    </div>
   </div>
-  <iframe id="thingSpeakFrame" src="https://thingspeak.com/channels/2906937/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&type=line&update=15"></iframe>
-
-  <script>
-    function switchView(view) {
-      const frame = document.getElementById("thingSpeakFrame");
-      const baseUrl = "https://thingspeak.com/channels/2906937/charts/1";
-      let params = "bgcolor=%23ffffff&color=%23d62020&dynamic=true&type=line&update=15";
-
-      if (view === "24h") {
-        params += "&days=1";
-      } else if (view === "week") {
-        params += "&days=7";
-      }
-
-      frame.src = baseUrl + "?" + params;
-    }
-  </script>
 </body>
 </html>
