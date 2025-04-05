@@ -1,0 +1,52 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperaturdiagramm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 1em;
+      background: #f0f0f0;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Umgebungstemperatur</h1>
+  <div>
+    <button onclick="switchView('24h')">24h Ansicht</button>
+    <button onclick="switchView('week')">Wochenansicht</button>
+  </div>
+  <iframe id="thingSpeakFrame" src="https://thingspeak.com/channels/2906937/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&type=line&update=15"></iframe>
+
+  <script>
+    function switchView(view) {
+      const frame = document.getElementById("thingSpeakFrame");
+      const baseUrl = "https://thingspeak.com/channels/2906937/charts/1";
+      let params = "bgcolor=%23ffffff&color=%23d62020&dynamic=true&type=line&update=15";
+
+      if (view === "24h") {
+        params += "&days=1";
+      } else if (view === "week") {
+        params += "&days=7";
+      }
+
+      frame.src = baseUrl + "?" + params;
+    }
+  </script>
+</body>
+</html>
